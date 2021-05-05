@@ -14,15 +14,16 @@ const typeDefs = gql`
     lastLogin: Date!
     joined: Date!
 
+    tickets: [Ticket]
     createdTickets: [Ticket]!
     assignedTickets: [Ticket]!
-    projects: [Project]!
+    project: Project
     resolved: Int!
   }
 
   type Ticket {
     id: ID!
-    prettyId: String!
+    tag: String!
     title: String!
     description: String
     author: User!
@@ -40,9 +41,9 @@ const typeDefs = gql`
     closedAt: Date
 
     priority: Int!
-    type: String!
+    type: TicketType!
 
-    files: [Url]
+    # files: [Url]
 
     comments: [Comment]
     log: [Event]!
@@ -74,6 +75,21 @@ const typeDefs = gql`
     user: User!
   }
 
+  type Sprint {
+    id: ID!
+    title: String!
+    description: String!
+    startDate: Date!
+    endDate: Date!
+    project: ID!
+    tickets: [Ticket]!
+  }
+
+  enum TicketType {
+    BUG
+    FEATURE
+  }
+
   enum Role {
     ADMIN
     MANAGER
@@ -91,6 +107,30 @@ const typeDefs = gql`
     TYPE
     COMMENT
     DELETED
+  }
+
+  type Query {
+    currentUser: User
+    getUser(userId: ID!): User
+    getUserTickets(userId: ID!): [Ticket]!
+    getAllUsers: [User]!
+    # filterUsers
+
+    getProject(projectId: ID!): Project
+    getAllProjects: [Project]!
+    getProjectTeam(projectId: ID!): [User]!
+    getProjectTickets(projectId: ID!): [Ticket]!
+    getProjectSprints(projectId: ID!): [Sprint]!
+
+    # Commented out ticket filter. Will implement later.
+    getTicket(ticketId: ID!): Ticket
+    getAllTickets: [Ticket]
+    getTicketLog(ticketId: ID!): [Event]!
+    # filterTickets(tag: String, ticketName: String, userName: String, projectName: String): [Ticket]!
+
+    getSprint(sprintId: ID!): Sprint
+    getAllSprints: [Sprint]!
+    # filterSprints
   }
 `
 

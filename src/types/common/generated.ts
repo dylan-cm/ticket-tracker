@@ -45,6 +45,69 @@ export type Project = {
   createdAt: Scalars['Date'];
 };
 
+export type Query = {
+  __typename?: 'Query';
+  currentUser?: Maybe<User>;
+  getUser?: Maybe<User>;
+  getUserTickets: Array<Maybe<Ticket>>;
+  getAllUsers: Array<Maybe<User>>;
+  getProject?: Maybe<Project>;
+  getAllProjects: Array<Maybe<Project>>;
+  getProjectTeam: Array<Maybe<User>>;
+  getProjectTickets: Array<Maybe<Ticket>>;
+  getProjectSprints: Array<Maybe<Sprint>>;
+  getTicket?: Maybe<Ticket>;
+  getAllTickets?: Maybe<Array<Maybe<Ticket>>>;
+  getTicketLog: Array<Maybe<Event>>;
+  getSprint?: Maybe<Sprint>;
+  getAllSprints: Array<Maybe<Sprint>>;
+};
+
+
+export type QueryGetUserArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type QueryGetUserTicketsArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type QueryGetProjectArgs = {
+  projectId: Scalars['ID'];
+};
+
+
+export type QueryGetProjectTeamArgs = {
+  projectId: Scalars['ID'];
+};
+
+
+export type QueryGetProjectTicketsArgs = {
+  projectId: Scalars['ID'];
+};
+
+
+export type QueryGetProjectSprintsArgs = {
+  projectId: Scalars['ID'];
+};
+
+
+export type QueryGetTicketArgs = {
+  ticketId: Scalars['ID'];
+};
+
+
+export type QueryGetTicketLogArgs = {
+  ticketId: Scalars['ID'];
+};
+
+
+export type QueryGetSprintArgs = {
+  sprintId: Scalars['ID'];
+};
+
 export enum Role {
   Admin = 'ADMIN',
   Manager = 'MANAGER',
@@ -52,10 +115,21 @@ export enum Role {
   Tester = 'TESTER'
 }
 
+export type Sprint = {
+  __typename?: 'Sprint';
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  description: Scalars['String'];
+  startDate: Scalars['Date'];
+  endDate: Scalars['Date'];
+  project: Scalars['ID'];
+  tickets: Array<Maybe<Ticket>>;
+};
+
 export type Ticket = {
   __typename?: 'Ticket';
   id: Scalars['ID'];
-  prettyId: Scalars['String'];
+  tag: Scalars['String'];
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   author: User;
@@ -69,8 +143,7 @@ export type Ticket = {
   open: Scalars['Boolean'];
   closedAt?: Maybe<Scalars['Date']>;
   priority: Scalars['Int'];
-  type: Scalars['String'];
-  files?: Maybe<Array<Maybe<Scalars['Url']>>>;
+  type: TicketType;
   comments?: Maybe<Array<Maybe<Comment>>>;
   log: Array<Maybe<Event>>;
 };
@@ -87,6 +160,11 @@ export enum TicketProperty {
   Deleted = 'DELETED'
 }
 
+export enum TicketType {
+  Bug = 'BUG',
+  Feature = 'FEATURE'
+}
+
 
 export type User = {
   __typename?: 'User';
@@ -96,8 +174,9 @@ export type User = {
   role: Role;
   lastLogin: Scalars['Date'];
   joined: Scalars['Date'];
+  tickets?: Maybe<Array<Maybe<Ticket>>>;
   createdTickets: Array<Maybe<Ticket>>;
   assignedTickets: Array<Maybe<Ticket>>;
-  projects: Array<Maybe<Project>>;
+  project?: Maybe<Project>;
   resolved: Scalars['Int'];
 };

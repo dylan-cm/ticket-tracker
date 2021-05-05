@@ -1,3 +1,7 @@
+type Maybe<T> = T | null;
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 interface Scalars {
   ID: string;
@@ -41,6 +45,69 @@ interface Project {
   createdAt: Scalars['Date'];
 };
 
+interface Query {
+  __typename?: 'Query';
+  currentUser?: Maybe<User>;
+  getUser?: Maybe<User>;
+  getUserTickets: Array<Maybe<Ticket>>;
+  getAllUsers: Array<Maybe<User>>;
+  getProject?: Maybe<Project>;
+  getAllProjects: Array<Maybe<Project>>;
+  getProjectTeam: Array<Maybe<User>>;
+  getProjectTickets: Array<Maybe<Ticket>>;
+  getProjectSprints: Array<Maybe<Sprint>>;
+  getTicket?: Maybe<Ticket>;
+  getAllTickets?: Maybe<Array<Maybe<Ticket>>>;
+  getTicketLog: Array<Maybe<Event>>;
+  getSprint?: Maybe<Sprint>;
+  getAllSprints: Array<Maybe<Sprint>>;
+};
+
+
+interface QueryGetUserArgs {
+  userId: Scalars['ID'];
+};
+
+
+interface QueryGetUserTicketsArgs {
+  userId: Scalars['ID'];
+};
+
+
+interface QueryGetProjectArgs {
+  projectId: Scalars['ID'];
+};
+
+
+interface QueryGetProjectTeamArgs {
+  projectId: Scalars['ID'];
+};
+
+
+interface QueryGetProjectTicketsArgs {
+  projectId: Scalars['ID'];
+};
+
+
+interface QueryGetProjectSprintsArgs {
+  projectId: Scalars['ID'];
+};
+
+
+interface QueryGetTicketArgs {
+  ticketId: Scalars['ID'];
+};
+
+
+interface QueryGetTicketLogArgs {
+  ticketId: Scalars['ID'];
+};
+
+
+interface QueryGetSprintArgs {
+  sprintId: Scalars['ID'];
+};
+
 enum Role {
   Admin = 'ADMIN',
   Manager = 'MANAGER',
@@ -48,10 +115,21 @@ enum Role {
   Tester = 'TESTER'
 }
 
+interface Sprint {
+  __typename?: 'Sprint';
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  description: Scalars['String'];
+  startDate: Scalars['Date'];
+  endDate: Scalars['Date'];
+  project: Scalars['ID'];
+  tickets: Array<Maybe<Ticket>>;
+};
+
 interface Ticket {
   __typename?: 'Ticket';
   id: Scalars['ID'];
-  prettyId: Scalars['String'];
+  tag: Scalars['String'];
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   author: User;
@@ -65,8 +143,7 @@ interface Ticket {
   open: Scalars['Boolean'];
   closedAt?: Maybe<Scalars['Date']>;
   priority: Scalars['Int'];
-  type: Scalars['String'];
-  files?: Maybe<Array<Maybe<Scalars['Url']>>>;
+  type: TicketType;
   comments?: Maybe<Array<Maybe<Comment>>>;
   log: Array<Maybe<Event>>;
 };
@@ -83,8 +160,13 @@ enum TicketProperty {
   Deleted = 'DELETED'
 }
 
+enum TicketType {
+  Bug = 'BUG',
+  Feature = 'FEATURE'
+}
 
-interface User  {
+
+interface User {
   __typename?: 'User';
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -92,8 +174,9 @@ interface User  {
   role: Role;
   lastLogin: Scalars['Date'];
   joined: Scalars['Date'];
+  tickets?: Maybe<Array<Maybe<Ticket>>>;
   createdTickets: Array<Maybe<Ticket>>;
   assignedTickets: Array<Maybe<Ticket>>;
-  projects: Array<Maybe<Project>>;
+  project?: Maybe<Project>;
   resolved: Scalars['Int'];
 };
