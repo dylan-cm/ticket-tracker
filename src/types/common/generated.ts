@@ -1,5 +1,9 @@
+export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
-interface Scalars {
+export type Scalars = {
   ID: string;
   String: string;
   Boolean: boolean;
@@ -10,7 +14,7 @@ interface Scalars {
   Url: any;
 };
 
-interface Comment {
+export type Comment = {
   __typename?: 'Comment';
   id: Scalars['ID'];
   author: User;
@@ -21,7 +25,7 @@ interface Comment {
 
 
 
-interface Event {
+export type Event = {
   __typename?: 'Event';
   id: Scalars['ID'];
   time: Scalars['Date'];
@@ -30,7 +34,7 @@ interface Event {
   user: User;
 };
 
-interface Project {
+export type Project = {
   __typename?: 'Project';
   id: Scalars['ID'];
   title: Scalars['String'];
@@ -41,14 +45,14 @@ interface Project {
   createdAt: Scalars['Date'];
 };
 
-enum Role {
+export enum Role {
   Admin = 'ADMIN',
   Manager = 'MANAGER',
   Developer = 'DEVELOPER',
   Tester = 'TESTER'
 }
 
-interface Ticket {
+export type Ticket = {
   __typename?: 'Ticket';
   id: Scalars['ID'];
   prettyId: Scalars['String'];
@@ -71,7 +75,7 @@ interface Ticket {
   log: Array<Maybe<Event>>;
 };
 
-enum TicketProperty {
+export enum TicketProperty {
   Authored = 'AUTHORED',
   AssignedTo = 'ASSIGNED_TO',
   Titled = 'TITLED',
@@ -84,7 +88,7 @@ enum TicketProperty {
 }
 
 
-interface User  {
+export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
   name: Scalars['String'];

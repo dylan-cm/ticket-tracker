@@ -1,0 +1,6 @@
+overwrite: true
+schema: "src/schema.ts"
+generates:
+  src/types/common/generated.ts:
+    plugins:
+      - "typescript"
