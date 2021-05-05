@@ -16,7 +16,7 @@
     "start:ci": "node src/index.ts"
   },
   "author": "Dylan Cortez-Modell",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "dependencies": {
     "apollo-server": "^2.24.0",
     "graphql": "^15.5.0",
