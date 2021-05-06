@@ -4,6 +4,7 @@ const typeDefs = gql`
   scalar Date
   scalar Url
   scalar Email
+  scalar Base64
 
   type User {
     id: ID!
@@ -20,6 +21,12 @@ const typeDefs = gql`
     project: Project
     resolved: Int!
     log: [Event]!
+  }
+
+  type UserFeed {
+    pageSize: Int! # must be >= 1; default 20
+    after: String # base64
+    users: [User]!
   }
 
   type Ticket {
@@ -50,6 +57,12 @@ const typeDefs = gql`
     log: [Event]!
   }
 
+  type TicketFeed {
+    pageSize: Int! # must be >= 1; default 20
+    after: String # base64
+    tickets: [Ticket]!
+  }
+
   type Project {
     id: ID!
     title: String!
@@ -61,6 +74,12 @@ const typeDefs = gql`
     log: [Event]!
   }
 
+  type ProjectFeed {
+    pageSize: Int! # must be >= 1; default 20
+    after: String # base64
+    projects: [Project]!
+  }
+
   type Comment {
     id: ID!
     author: User!
@@ -69,12 +88,24 @@ const typeDefs = gql`
     updatedAt: Date!
   }
 
+  type CommentFeed {
+    pageSize: Int! # must be >= 1; default 20
+    after: String # base64
+    comments: [Comment]!
+  }
+
   type Event {
     id: ID!
     time: Date!
     property: String!
     change: String!
     user: User!
+  }
+
+  type EventFeed {
+    pageSize: Int! # must be >= 1; default 20
+    after: String # base64
+    events: [Event]!
   }
 
   type Sprint {
@@ -86,6 +117,12 @@ const typeDefs = gql`
     project: Project!
     tickets: [Ticket]!
     log: [Event]!
+  }
+
+  type SprintFeed {
+    pageSize: Int! # must be >= 1; default 20
+    after: String # base64
+    sprints: [Sprint]!
   }
 
   enum TicketType {
@@ -115,27 +152,27 @@ const typeDefs = gql`
   type Query {
     currentUser: User
     getUser(userId: ID!): User
-    getUserTickets(userId: ID!): [Ticket]!
-    getAllUsers: [User]!
-    getUserLog(ticketId: ID!): [Event]!
+    getUserTickets(userId: ID!, after: Base64, pageSize: Int): TicketFeed!
+    getAllUsers(after: Base64, pageSize: Int): UserFeed!
+    getUserLog(ticketId: ID!, after: Base64, pageSize: Int): EventFeed!
     # filterUsers
 
     getProject(projectId: ID!): Project
-    getAllProjects: [Project]!
-    getProjectTeam(projectId: ID!): [User]!
-    getProjectTickets(projectId: ID!): [Ticket]!
-    getProjectSprints(projectId: ID!): [Sprint]!
-    getProjectLog(ticketId: ID!): [Event]!
+    getAllProjects(after: Base64, pageSize: Int): ProjectFeed!
+    getProjectTeam(projectId: ID!, after: Base64, pageSize: Int): UserFeed!
+    getProjectTickets(projectId: ID!, after: Base64, pageSize: Int): TicketFeed!
+    getProjectSprints(projectId: ID!, after: Base64, pageSize: Int): SprintFeed!
+    getProjectLog(ticketId: ID!, after: Base64, pageSize: Int): EventFeed!
 
     # Commented out ticket filter. Will implement later.
     getTicket(ticketId: ID!): Ticket
-    getAllTickets: [Ticket]
-    getTicketLog(ticketId: ID!): [Event]!
-    # filterTickets(tag: String, ticketName: String, userName: String, projectName: String): [Ticket]!
+    getAllTickets(after: Base64, pageSize: Int): TicketFeed!
+    getTicketLog(ticketId: ID!, after: Base64, pageSize: Int): EventFeed!
+    # filterTickets()
 
     getSprint(sprintId: ID!): Sprint
-    getAllSprints: [Sprint]!
-    getSprintLog(ticketId: ID!): [Event]!
+    getAllSprints(after: Base64, pageSize: Int): SprintFeed!
+    getSprintLog(ticketId: ID!, after: Base64, pageSize: Int): EventFeed!
     # filterSprints
   }
 `

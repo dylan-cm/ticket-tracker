@@ -9,10 +9,12 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Base64: any;
   Date: any;
   Email: any;
   Url: any;
 };
+
 
 export type Comment = {
   __typename?: 'Comment';
@@ -21,6 +23,13 @@ export type Comment = {
   comment: Scalars['String'];
   createdAt: Scalars['Date'];
   updatedAt: Scalars['Date'];
+};
+
+export type CommentFeed = {
+  __typename?: 'CommentFeed';
+  pageSize: Scalars['Int'];
+  after?: Maybe<Scalars['String']>;
+  comments: Array<Maybe<Comment>>;
 };
 
 
@@ -34,6 +43,13 @@ export type Event = {
   user: User;
 };
 
+export type EventFeed = {
+  __typename?: 'EventFeed';
+  pageSize: Scalars['Int'];
+  after?: Maybe<Scalars['String']>;
+  events: Array<Maybe<Event>>;
+};
+
 export type Project = {
   __typename?: 'Project';
   id: Scalars['ID'];
@@ -43,24 +59,35 @@ export type Project = {
   team: Array<Maybe<User>>;
   tickets: Array<Maybe<Ticket>>;
   createdAt: Scalars['Date'];
+  log: Array<Maybe<Event>>;
+};
+
+export type ProjectFeed = {
+  __typename?: 'ProjectFeed';
+  pageSize: Scalars['Int'];
+  after?: Maybe<Scalars['String']>;
+  projects: Array<Maybe<Project>>;
 };
 
 export type Query = {
   __typename?: 'Query';
   currentUser?: Maybe<User>;
   getUser?: Maybe<User>;
-  getUserTickets: Array<Maybe<Ticket>>;
-  getAllUsers: Array<Maybe<User>>;
+  getUserTickets: TicketFeed;
+  getAllUsers: UserFeed;
+  getUserLog: EventFeed;
   getProject?: Maybe<Project>;
-  getAllProjects: Array<Maybe<Project>>;
-  getProjectTeam: Array<Maybe<User>>;
-  getProjectTickets: Array<Maybe<Ticket>>;
-  getProjectSprints: Array<Maybe<Sprint>>;
+  getAllProjects: ProjectFeed;
+  getProjectTeam: UserFeed;
+  getProjectTickets: TicketFeed;
+  getProjectSprints: SprintFeed;
+  getProjectLog: EventFeed;
   getTicket?: Maybe<Ticket>;
-  getAllTickets?: Maybe<Array<Maybe<Ticket>>>;
-  getTicketLog: Array<Maybe<Event>>;
+  getAllTickets: TicketFeed;
+  getTicketLog: EventFeed;
   getSprint?: Maybe<Sprint>;
-  getAllSprints: Array<Maybe<Sprint>>;
+  getAllSprints: SprintFeed;
+  getSprintLog: EventFeed;
 };
 
 
@@ -71,6 +98,21 @@ export type QueryGetUserArgs = {
 
 export type QueryGetUserTicketsArgs = {
   userId: Scalars['ID'];
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetAllUsersArgs = {
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetUserLogArgs = {
+  ticketId: Scalars['ID'];
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
 };
 
 
@@ -79,18 +121,37 @@ export type QueryGetProjectArgs = {
 };
 
 
+export type QueryGetAllProjectsArgs = {
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryGetProjectTeamArgs = {
   projectId: Scalars['ID'];
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
 };
 
 
 export type QueryGetProjectTicketsArgs = {
   projectId: Scalars['ID'];
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
 };
 
 
 export type QueryGetProjectSprintsArgs = {
   projectId: Scalars['ID'];
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetProjectLogArgs = {
+  ticketId: Scalars['ID'];
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
 };
 
 
@@ -99,13 +160,34 @@ export type QueryGetTicketArgs = {
 };
 
 
+export type QueryGetAllTicketsArgs = {
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryGetTicketLogArgs = {
   ticketId: Scalars['ID'];
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
 };
 
 
 export type QueryGetSprintArgs = {
   sprintId: Scalars['ID'];
+};
+
+
+export type QueryGetAllSprintsArgs = {
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetSprintLogArgs = {
+  ticketId: Scalars['ID'];
+  after?: Maybe<Scalars['Base64']>;
+  pageSize?: Maybe<Scalars['Int']>;
 };
 
 export enum Role {
@@ -124,6 +206,14 @@ export type Sprint = {
   endDate: Scalars['Date'];
   project: Project;
   tickets: Array<Maybe<Ticket>>;
+  log: Array<Maybe<Event>>;
+};
+
+export type SprintFeed = {
+  __typename?: 'SprintFeed';
+  pageSize: Scalars['Int'];
+  after?: Maybe<Scalars['String']>;
+  sprints: Array<Maybe<Sprint>>;
 };
 
 export type Ticket = {
@@ -146,6 +236,13 @@ export type Ticket = {
   type: TicketType;
   comments?: Maybe<Array<Maybe<Comment>>>;
   log: Array<Maybe<Event>>;
+};
+
+export type TicketFeed = {
+  __typename?: 'TicketFeed';
+  pageSize: Scalars['Int'];
+  after?: Maybe<Scalars['String']>;
+  tickets: Array<Maybe<Ticket>>;
 };
 
 export enum TicketProperty {
@@ -179,4 +276,12 @@ export type User = {
   assignedTickets: Array<Maybe<Ticket>>;
   project?: Maybe<Project>;
   resolved: Scalars['Int'];
+  log: Array<Maybe<Event>>;
+};
+
+export type UserFeed = {
+  __typename?: 'UserFeed';
+  pageSize: Scalars['Int'];
+  after?: Maybe<Scalars['String']>;
+  users: Array<Maybe<User>>;
 };
