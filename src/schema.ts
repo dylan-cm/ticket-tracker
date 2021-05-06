@@ -114,6 +114,7 @@ const typeDefs = gql`
     getUser(userId: ID!): User
     getUserTickets(userId: ID!): [Ticket]!
     getAllUsers: [User]!
+    getTicketLog(ticketId: ID!): [Event]!
     # filterUsers
 
     getProject(projectId: ID!): Project
@@ -121,6 +122,7 @@ const typeDefs = gql`
     getProjectTeam(projectId: ID!): [User]!
     getProjectTickets(projectId: ID!): [Ticket]!
     getProjectSprints(projectId: ID!): [Sprint]!
+    getTicketLog(ticketId: ID!): [Event]!
 
     # Commented out ticket filter. Will implement later.
     getTicket(ticketId: ID!): Ticket
@@ -130,6 +132,7 @@ const typeDefs = gql`
 
     getSprint(sprintId: ID!): Sprint
     getAllSprints: [Sprint]!
+    getTicketLog(ticketId: ID!): [Event]!
     # filterSprints
   }
 `

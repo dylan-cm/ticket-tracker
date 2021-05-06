@@ -32,9 +32,18 @@ const UserResolver: IResolvers = {
       { userId }: {userId: Scalars['ID']}, 
       { dataSources }: {dataSources: CustomDataSourceType}
     ): Promise<Ticket[]> => {
-      if(!userId) throw new Error('getUser query requires userId')
+      if(!userId) throw new Error('getUserTickets query requires userId')
       
       return await dataSources.userAPI.getUserTickets(userId)
+    },
+    getUserLog: async (
+      _, 
+      { userId }: {userId: Scalars['ID']}, 
+      { dataSources }: {dataSources: CustomDataSourceType}
+    ): Promise<Event[]> => {
+      if(!userId) throw new Error('getUserLog query requires userId')
+      
+      return await dataSources.userAPI.getUserLog(userId)
     },
 
     getProject: async (
@@ -42,7 +51,7 @@ const UserResolver: IResolvers = {
       { projectId }: {projectId: Scalars['ID']}, 
       { dataSources }: {dataSources: CustomDataSourceType}
     ): Promise<Project | undefined> => {
-      if(!projectId) throw new Error('getUser query requires projectId')
+      if(!projectId) throw new Error('getProject query requires projectId')
       
       return await dataSources.userAPI.getProject(projectId)
     },
@@ -58,9 +67,18 @@ const UserResolver: IResolvers = {
       { projectId }: {projectId: Scalars['ID']}, 
       { dataSources }: {dataSources: CustomDataSourceType}
     ): Promise<Ticket[]> => {
-      if(!projectId) throw new Error('getUser query requires projectId')
+      if(!projectId) throw new Error('getUserTickets query requires projectId')
       
       return await dataSources.userAPI.getProjectTickets(projectId)
+    },
+    getProjectLog: async (
+      _, 
+      { projectId }: {projectId: Scalars['ID']}, 
+      { dataSources }: {dataSources: CustomDataSourceType}
+    ): Promise<Event[]> => {
+      if(!projectId) throw new Error('getProjectLog query requires projectId')
+      
+      return await dataSources.userAPI.getProjectLog(projectId)
     },
 
     getTicket: async (
@@ -104,6 +122,15 @@ const UserResolver: IResolvers = {
       { dataSources }: {dataSources: CustomDataSourceType}
     ): Promise<Sprint[]> => {
       return await dataSources.userAPI.getAllSprints()
+    },
+    getSprintLog: async (
+      _, 
+      { sprintId }: {sprintId: Scalars['ID']}, 
+      { dataSources }: {dataSources: CustomDataSourceType}
+    ): Promise<Event[]> => {
+      if(!sprintId) throw new Error('getUser query requires sprintId')
+      
+      return await dataSources.userAPI.getSprintLog(sprintId)
     },
 
   },

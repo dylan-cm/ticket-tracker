@@ -48,11 +48,19 @@ class UserAPI extends DataSource {
     else return this.context.user
   } 
 
-  getUserTickets = async (): Promise<Ticket[]> => {
+  getUserTickets = async (userId: Scalars['ID']): Promise<Ticket[]> => {
+    if (!userId) throw new Error('getUser query requires userId')
+    
     return []
   }
 
   getAllUsers = async (): Promise<User[]> => {
+    return []
+  }
+  
+  getUserLog = async (userId: Scalars['ID']): Promise<Event[]> => {
+    if (!userId) throw new Error('getUser query requires userId')
+    
     return []
   }
 
@@ -84,15 +92,27 @@ class UserAPI extends DataSource {
     return []
   }
   
-  getProjectTeam = async (): Promise<User[]> => {
+  getProjectTeam = async (projectId: Scalars['ID']): Promise<User[]> => {
+    if (!projectId) throw new Error('getProject query requires projectId')
+    
     return []
   }
   
-  getProjectTickets = async (): Promise<Ticket[]> => {
+  getProjectTickets = async (projectId: Scalars['ID']): Promise<Ticket[]> => {
+    if (!projectId) throw new Error('getProject query requires projectId')
+    
     return []
   }
 
-  getProjectSprints = async (): Promise<Sprint[]> => {
+  getProjectSprints = async (projectId: Scalars['ID']): Promise<Sprint[]> => {
+    if (!projectId) throw new Error('getProject query requires projectId')
+    
+    return []
+  }
+
+  getProjectLog = async (projectId: Scalars['ID']): Promise<Event[]> => {
+    if (!projectId) throw new Error('getProject query requires projectId')
+    
     return []
   }
 
@@ -149,7 +169,9 @@ class UserAPI extends DataSource {
     return []
   }
 
-  getTicketLog = async (): Promise<Event[]> => {
+  getTicketLog = async (ticketId: Scalars['ID']): Promise<Event[]> => {
+    if (!ticketId) throw new Error('getTicket query requires ticketId')
+   
     return []
   }
 
@@ -181,6 +203,12 @@ class UserAPI extends DataSource {
   }
 
   getAllSprints = async (): Promise<Sprint[]> => {
+    return []
+  }
+
+  getSprintLog = async (sprintId: Scalars['ID']): Promise<Event[]> => {
+    if (!sprintId) throw new Error('getSprint query requires sprintId')
+
     return []
   }
 }
