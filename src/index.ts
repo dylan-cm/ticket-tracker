@@ -1,11 +1,22 @@
 import { ApolloServer } from 'apollo-server'
 import typeDefs from './schema'
 
+import UserAPI from './datasources/userAPI'
+
+import resolvers from './resolvers/resolvers'
+
 const context = async ({ req }: {req: any}) => {}
+
+const dataSources = () => ({
+  userAPI: new UserAPI(),
+})
+
 
 const server = new ApolloServer({
   typeDefs,
   context,
+  dataSources,
+  resolvers
 })
 
 const PORT = process.env.PORT || 2323
@@ -25,7 +36,7 @@ server.listen({ port: PORT }).then(() => {
 })
 
 module.exports = {
-  // dataSources,
+  dataSources,
   context,
   typeDefs,
   // resolvers,
