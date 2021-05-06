@@ -21,6 +21,7 @@ class UserAPI extends DataSource {
     let managers: User[] = []
     let team: User[] = []
     let createdAt: Scalars['Date'] = ""
+    let log: Event[] = []
 
     let user: Project = {
       id: projectId,
@@ -30,6 +31,7 @@ class UserAPI extends DataSource {
       managers,
       team,
       createdAt,
+      log,
     }
 
     return user
@@ -72,6 +74,7 @@ class UserAPI extends DataSource {
     let startDate: Scalars['Date'] = ""
     let endDate: Scalars['Date'] = ""
     let tickets: Ticket[] = []
+    let log: Event[] = []
     
     let project: Project | undefined = await this.getProject("implement")
 
@@ -85,6 +88,7 @@ class UserAPI extends DataSource {
     startDate,
     endDate,
     tickets,
+    log,
     }
 
     return sprint

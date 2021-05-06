@@ -25,6 +25,7 @@ class UserAPI extends DataSource {
     let assignedTickets: Ticket[] = []
     let project: Project | null = null
     let resolved = 0
+    let log: Event[] = []
 
     let user: User = {
       id: userId,
@@ -37,7 +38,8 @@ class UserAPI extends DataSource {
       createdTickets,
       assignedTickets,
       project,
-      resolved
+      resolved,
+      log,
     }
 
     return user
