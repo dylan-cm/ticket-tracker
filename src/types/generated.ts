@@ -122,7 +122,7 @@ export type Sprint = {
   description: Scalars['String'];
   startDate: Scalars['Date'];
   endDate: Scalars['Date'];
-  project: Scalars['ID'];
+  project: Project;
   tickets: Array<Maybe<Ticket>>;
 };
 

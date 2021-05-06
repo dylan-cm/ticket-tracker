@@ -81,7 +81,7 @@ const typeDefs = gql`
     description: String!
     startDate: Date!
     endDate: Date!
-    project: ID!
+    project: Project!
     tickets: [Ticket]!
   }
 
