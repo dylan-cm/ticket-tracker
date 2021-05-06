@@ -38,11 +38,11 @@ const typeDefs = gql`
     users: [User]
   }
 
-  type UserSetters {
+  input UserInput {
     name: String
     email: Email
     role: Role
-    project: Project
+    project: ID
   } 
 
   type Ticket {
@@ -86,11 +86,11 @@ const typeDefs = gql`
     tickets: [Ticket]
   }
 
-  type TicketSetters {
+  input TicketInput {
     tag: String
     title: String
     description: String
-    project: Project
+    project: ID
     priority: Int
     type: TicketType
   } 
@@ -119,7 +119,7 @@ const typeDefs = gql`
     projects: [Project]
   }
 
-  type ProjectSetters {
+  input ProjectInput {
     title: String
     description: String
   } 
@@ -144,10 +144,6 @@ const typeDefs = gql`
     log: Event
     comments: [Comment]
   }
-
-  type CommentSetters {
-    comment: String
-  } 
 
   type Event {
     id: ID!
@@ -187,12 +183,12 @@ const typeDefs = gql`
     sprints: [Sprint]
   }
 
-  type SprintSetters {
+  input SprintInput {
     title: String
     description: String
     startDate: Date
     endDate: Date
-    project: Project
+    project: ID
   } 
 
   enum TicketType {
@@ -248,27 +244,27 @@ const typeDefs = gql`
 
   type Mutation {
     # if no userId provided, new user added with default values
-    setUser(userId: ID, values: UserSetters): UserUpdateResponse!
+    setUser(userId: ID, values: UserInput): UserUpdateResponse!
     deleteUser(userId: ID!): UserUpdateResponse!
 
     # if no ticketId provided, new ticket added with default values
-    setTicket(ticketId: ID, values: TicketSetters): TicketUpdateResponse! 
+    setTicket(ticketId: ID, values: TicketInput): TicketUpdateResponse! 
     deleteTicket(ticketId: ID!): TicketUpdateResponse!
     closeTicket(ticketId: ID!): TicketUpdateResponse!
     openTicket(ticketId: ID!): TicketUpdateResponse!
     assignTicket(ticketId: ID!, userId: ID!): TicketUpdateResponse!
     # if no commentId provided, new comment added
-    setComment(ticketId: ID!, commentId: ID, comment: CommentSetters!): TicketUpdateResponse!
+    setComment(ticketId: ID!, commentId: ID, comment: String!): TicketUpdateResponse!
 
     # if no projectId provided, new project added with default values
-    setProject(projectId: ID, values: ProjectSetters): ProjectUpdateResponse!
+    setProject(projectId: ID, values: ProjectInput): ProjectUpdateResponse!
     deleteProject(projectId: ID!): ProjectUpdateResponse!
     addTeamMember(userID: ID!): ProjectUpdateResponse!
     removeTeamMember(userId: ID!): ProjectUpdateResponse!
     addManager(userId: ID!): ProjectUpdateResponse!
     removeManager(userId: ID!): ProjectUpdateResponse!
     # if no sprintId provided, new sprint added with default values
-    setSprint(projectId: ID!, sprintId: ID, values: SprintValues): SprintUpdateResponse!
+    setSprint(projectId: ID!, sprintId: ID, values: SprintInput): SprintUpdateResponse!
     deleteSprint(sprintId: ID!): SprintUpdateResponse!
   }
 `

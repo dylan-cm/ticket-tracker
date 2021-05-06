@@ -12,7 +12,9 @@ export type Scalars = {
   Base64: any;
   Date: any;
   Email: any;
+  Property: any;
   Url: any;
+  Value: any;
 };
 
 
@@ -30,6 +32,14 @@ export type CommentFeed = {
   pageSize: Scalars['Int'];
   after?: Maybe<Scalars['String']>;
   comments: Array<Maybe<Comment>>;
+};
+
+export type CommentUpdateResponse = {
+  __typename?: 'CommentUpdateResponse';
+  success: Scalars['Boolean'];
+  message?: Maybe<Scalars['String']>;
+  log?: Maybe<Event>;
+  comments?: Maybe<Array<Maybe<Comment>>>;
 };
 
 
@@ -50,6 +60,114 @@ export type EventFeed = {
   events: Array<Maybe<Event>>;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  setUser: UserUpdateResponse;
+  deleteUser: UserUpdateResponse;
+  setTicket: TicketUpdateResponse;
+  deleteTicket: TicketUpdateResponse;
+  closeTicket: TicketUpdateResponse;
+  openTicket: TicketUpdateResponse;
+  assignTicket: TicketUpdateResponse;
+  setComment: TicketUpdateResponse;
+  setProject: ProjectUpdateResponse;
+  deleteProject: ProjectUpdateResponse;
+  addTeamMember: ProjectUpdateResponse;
+  removeTeamMember: ProjectUpdateResponse;
+  addManager: ProjectUpdateResponse;
+  removeManager: ProjectUpdateResponse;
+  setSprint: SprintUpdateResponse;
+  deleteSprint: SprintUpdateResponse;
+};
+
+
+export type MutationSetUserArgs = {
+  userId?: Maybe<Scalars['ID']>;
+  values?: Maybe<UserInput>;
+};
+
+
+export type MutationDeleteUserArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type MutationSetTicketArgs = {
+  ticketId?: Maybe<Scalars['ID']>;
+  values?: Maybe<TicketInput>;
+};
+
+
+export type MutationDeleteTicketArgs = {
+  ticketId: Scalars['ID'];
+};
+
+
+export type MutationCloseTicketArgs = {
+  ticketId: Scalars['ID'];
+};
+
+
+export type MutationOpenTicketArgs = {
+  ticketId: Scalars['ID'];
+};
+
+
+export type MutationAssignTicketArgs = {
+  ticketId: Scalars['ID'];
+  userId: Scalars['ID'];
+};
+
+
+export type MutationSetCommentArgs = {
+  ticketId: Scalars['ID'];
+  commentId?: Maybe<Scalars['ID']>;
+  comment: Scalars['String'];
+};
+
+
+export type MutationSetProjectArgs = {
+  projectId?: Maybe<Scalars['ID']>;
+  values?: Maybe<ProjectInput>;
+};
+
+
+export type MutationDeleteProjectArgs = {
+  projectId: Scalars['ID'];
+};
+
+
+export type MutationAddTeamMemberArgs = {
+  userID: Scalars['ID'];
+};
+
+
+export type MutationRemoveTeamMemberArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type MutationAddManagerArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type MutationRemoveManagerArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type MutationSetSprintArgs = {
+  projectId: Scalars['ID'];
+  sprintId?: Maybe<Scalars['ID']>;
+  values?: Maybe<SprintInput>;
+};
+
+
+export type MutationDeleteSprintArgs = {
+  sprintId: Scalars['ID'];
+};
+
 export type Project = {
   __typename?: 'Project';
   id: Scalars['ID'];
@@ -68,6 +186,20 @@ export type ProjectFeed = {
   after?: Maybe<Scalars['String']>;
   projects: Array<Maybe<Project>>;
 };
+
+export type ProjectInput = {
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type ProjectUpdateResponse = {
+  __typename?: 'ProjectUpdateResponse';
+  success: Scalars['Boolean'];
+  message?: Maybe<Scalars['String']>;
+  log?: Maybe<Event>;
+  projects?: Maybe<Array<Maybe<Project>>>;
+};
+
 
 export type Query = {
   __typename?: 'Query';
@@ -216,6 +348,22 @@ export type SprintFeed = {
   sprints: Array<Maybe<Sprint>>;
 };
 
+export type SprintInput = {
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  startDate?: Maybe<Scalars['Date']>;
+  endDate?: Maybe<Scalars['Date']>;
+  project?: Maybe<Scalars['ID']>;
+};
+
+export type SprintUpdateResponse = {
+  __typename?: 'SprintUpdateResponse';
+  success: Scalars['Boolean'];
+  message?: Maybe<Scalars['String']>;
+  log?: Maybe<Event>;
+  sprints?: Maybe<Array<Maybe<Sprint>>>;
+};
+
 export type Ticket = {
   __typename?: 'Ticket';
   id: Scalars['ID'];
@@ -245,6 +393,15 @@ export type TicketFeed = {
   tickets: Array<Maybe<Ticket>>;
 };
 
+export type TicketInput = {
+  tag?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  project?: Maybe<Scalars['ID']>;
+  priority?: Maybe<Scalars['Int']>;
+  type?: Maybe<TicketType>;
+};
+
 export enum TicketProperty {
   Authored = 'AUTHORED',
   AssignedTo = 'ASSIGNED_TO',
@@ -261,6 +418,14 @@ export enum TicketType {
   Bug = 'BUG',
   Feature = 'FEATURE'
 }
+
+export type TicketUpdateResponse = {
+  __typename?: 'TicketUpdateResponse';
+  success: Scalars['Boolean'];
+  message?: Maybe<Scalars['String']>;
+  log?: Maybe<Event>;
+  tickets?: Maybe<Array<Maybe<Ticket>>>;
+};
 
 
 export type User = {
@@ -285,3 +450,19 @@ export type UserFeed = {
   after?: Maybe<Scalars['String']>;
   users: Array<Maybe<User>>;
 };
+
+export type UserInput = {
+  name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['Email']>;
+  role?: Maybe<Role>;
+  project?: Maybe<Scalars['ID']>;
+};
+
+export type UserUpdateResponse = {
+  __typename?: 'UserUpdateResponse';
+  success: Scalars['Boolean'];
+  message?: Maybe<Scalars['String']>;
+  log?: Maybe<Event>;
+  users?: Maybe<Array<Maybe<User>>>;
+};
+

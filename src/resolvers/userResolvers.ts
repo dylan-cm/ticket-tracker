@@ -45,8 +45,15 @@ const UserResolver: IResolvers = {
       
       return await dataSources.userAPI.getUserLog(userId, pageSize, after)
     },
-
   },
+
+  // Mutation: {
+  //   setUser: async (
+  //     _,
+  //     { userId, values}
+  //   ) => {},
+  //   deleteUser: async () => {}
+  // },
 }
 
 export default UserResolver
