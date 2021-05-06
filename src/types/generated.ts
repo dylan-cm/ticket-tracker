@@ -171,7 +171,7 @@ export type User = {
   id: Scalars['ID'];
   name: Scalars['String'];
   email: Scalars['Email'];
-  role: Role;
+  role?: Maybe<Role>;
   lastLogin: Scalars['Date'];
   joined: Scalars['Date'];
   tickets?: Maybe<Array<Maybe<Ticket>>>;

@@ -2,14 +2,14 @@ import gql from 'graphql-tag'
 
 import testServer from '../../__testUtilities__/testServer'
 import UserAPI from '../../datasources/userAPI'
-import { Role, User } from '../../types/generated'
+import { User } from '../../types/generated'
 
 describe('UserAPI', () => {
   let userSample: User = {
     id: "U123",
     name: "Dylan Cortez-Modell",
     email: "dylan@cortez-modell.com",
-    role: Role.Admin,
+    role: null,
     lastLogin: "1620257982",
     joined: "1620257982",
     tickets: [],
@@ -60,21 +60,18 @@ describe('UserAPI', () => {
 
     `
 
-    // A query is made as if it was a real service.
-    const res = await query({ query: GET_USER, variables: { "getUserUserId": "123" } })
-    console.log(res.data)
+    let res = await query({ query: GET_USER, variables: { "getUserUserId": "123" } })
+    expect(res.errors).toBeUndefined()
 
-    // We ensure that the errors are undefined.
-    // This helps us to see what goes wrong.
-    expect(res.errors).toBe(undefined)
+    let user: User = res?.data?.getUser
+    expect(typeof user).toBe(typeof userSample)
+    // expect(user).toEqual(userSample)
 
-    // We check to see if the `movies`
-    // endpoint is called properly.
-    // expect(userAPI.get).toHaveBeenCalledWith('user')
+    res = await query({ query: GET_USER, variables: { "getUserUserId": "" } })
+    expect(res.errors).toBeTruthy()
 
-    // We check to see if we have
-    // all the movies in the sample.
-    // expect(res?.data?.getUser).toEqual(userSample)
+    res = await query({ query: GET_USER, variables: { "getUserUserId": "does not exist" } })
+    // expect(res.errors).toBeNull()
   })
 })
 

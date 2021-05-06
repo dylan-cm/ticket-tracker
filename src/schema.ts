@@ -9,7 +9,7 @@ const typeDefs = gql`
     id: ID!
     name: String!
     email: Email!
-    role: Role!
+    role: Role
 
     lastLogin: Date!
     joined: Date!

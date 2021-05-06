@@ -1,6 +1,6 @@
 overwrite: true
 schema: "src/schema.ts"
 generates:
-  src/types/common/generated.ts:
+  src/types/generated.ts:
     plugins:
       - "typescript"

@@ -11,12 +11,12 @@ class UserAPI extends DataSource  {
     this.context = context
   }
 
-  getUser = (userId: string) => {
+  getUser = (userId: string): User | null => {
     if (!userId) throw new Error('getUser query requires userId')
 
     let name = ""
     let email = ""
-    let role = Role.Developer
+    let role: Role | null = null
     let lastLogin = ""
     let joined = ""
     let tickets: Ticket[] = []
