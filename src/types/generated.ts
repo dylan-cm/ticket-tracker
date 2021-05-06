@@ -83,7 +83,7 @@ export type Mutation = {
 
 export type MutationSetUserArgs = {
   userId?: Maybe<Scalars['ID']>;
-  values?: Maybe<UserInput>;
+  input?: Maybe<UserInput>;
 };
 
 
@@ -94,7 +94,7 @@ export type MutationDeleteUserArgs = {
 
 export type MutationSetTicketArgs = {
   ticketId?: Maybe<Scalars['ID']>;
-  values?: Maybe<TicketInput>;
+  input?: Maybe<TicketInput>;
 };
 
 
@@ -128,7 +128,7 @@ export type MutationSetCommentArgs = {
 
 export type MutationSetProjectArgs = {
   projectId?: Maybe<Scalars['ID']>;
-  values?: Maybe<ProjectInput>;
+  input?: Maybe<ProjectInput>;
 };
 
 
@@ -160,7 +160,7 @@ export type MutationRemoveManagerArgs = {
 export type MutationSetSprintArgs = {
   projectId: Scalars['ID'];
   sprintId?: Maybe<Scalars['ID']>;
-  values?: Maybe<SprintInput>;
+  input?: Maybe<SprintInput>;
 };
 
 

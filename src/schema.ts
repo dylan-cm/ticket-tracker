@@ -244,11 +244,11 @@ const typeDefs = gql`
 
   type Mutation {
     # if no userId provided, new user added with default values
-    setUser(userId: ID, values: UserInput): UserUpdateResponse!
+    setUser(userId: ID, input: UserInput): UserUpdateResponse!
     deleteUser(userId: ID!): UserUpdateResponse!
 
     # if no ticketId provided, new ticket added with default values
-    setTicket(ticketId: ID, values: TicketInput): TicketUpdateResponse! 
+    setTicket(ticketId: ID, input: TicketInput): TicketUpdateResponse! 
     deleteTicket(ticketId: ID!): TicketUpdateResponse!
     closeTicket(ticketId: ID!): TicketUpdateResponse!
     openTicket(ticketId: ID!): TicketUpdateResponse!
@@ -257,14 +257,14 @@ const typeDefs = gql`
     setComment(ticketId: ID!, commentId: ID, comment: String!): TicketUpdateResponse!
 
     # if no projectId provided, new project added with default values
-    setProject(projectId: ID, values: ProjectInput): ProjectUpdateResponse!
+    setProject(projectId: ID, input: ProjectInput): ProjectUpdateResponse!
     deleteProject(projectId: ID!): ProjectUpdateResponse!
     addTeamMember(userID: ID!): ProjectUpdateResponse!
     removeTeamMember(userId: ID!): ProjectUpdateResponse!
     addManager(userId: ID!): ProjectUpdateResponse!
     removeManager(userId: ID!): ProjectUpdateResponse!
     # if no sprintId provided, new sprint added with default values
-    setSprint(projectId: ID!, sprintId: ID, values: SprintInput): SprintUpdateResponse!
+    setSprint(projectId: ID!, sprintId: ID, input: SprintInput): SprintUpdateResponse!
     deleteSprint(sprintId: ID!): SprintUpdateResponse!
   }
 `
