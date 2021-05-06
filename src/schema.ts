@@ -5,6 +5,8 @@ const typeDefs = gql`
   scalar Url
   scalar Email
   scalar Base64
+  scalar Property
+  scalar Value
 
   type User {
     id: ID!
@@ -28,6 +30,20 @@ const typeDefs = gql`
     after: String # base64
     users: [User]!
   }
+
+  type UserUpdateResponse {
+    success: Boolean!
+    message: String
+    log: Event
+    users: [User]
+  }
+
+  type UserSetters {
+    name: String
+    email: Email
+    role: Role
+    project: Project
+  } 
 
   type Ticket {
     id: ID!
@@ -63,6 +79,22 @@ const typeDefs = gql`
     tickets: [Ticket]!
   }
 
+  type TicketUpdateResponse {
+    success: Boolean!
+    message: String
+    log: Event
+    tickets: [Ticket]
+  }
+
+  type TicketSetters {
+    tag: String
+    title: String
+    description: String
+    project: Project
+    priority: Int
+    type: TicketType
+  } 
+
   type Project {
     id: ID!
     title: String!
@@ -80,6 +112,18 @@ const typeDefs = gql`
     projects: [Project]!
   }
 
+  type ProjectUpdateResponse {
+    success: Boolean!
+    message: String
+    log: Event
+    projects: [Project]
+  }
+
+  type ProjectSetters {
+    title: String
+    description: String
+  } 
+
   type Comment {
     id: ID!
     author: User!
@@ -93,6 +137,17 @@ const typeDefs = gql`
     after: String # base64
     comments: [Comment]!
   }
+
+  type CommentUpdateResponse {
+    success: Boolean!
+    message: String
+    log: Event
+    comments: [Comment]
+  }
+
+  type CommentSetters {
+    comment: String
+  } 
 
   type Event {
     id: ID!
@@ -124,6 +179,21 @@ const typeDefs = gql`
     after: String # base64
     sprints: [Sprint]!
   }
+
+  type SprintUpdateResponse {
+    success: Boolean!
+    message: String
+    log: Event
+    sprints: [Sprint]
+  }
+
+  type SprintSetters {
+    title: String
+    description: String
+    startDate: Date
+    endDate: Date
+    project: Project
+  } 
 
   enum TicketType {
     BUG
@@ -174,6 +244,32 @@ const typeDefs = gql`
     getAllSprints(after: Base64, pageSize: Int): SprintFeed!
     getSprintLog(ticketId: ID!, after: Base64, pageSize: Int): EventFeed!
     # filterSprints
+  }
+
+  type Mutation {
+    # if no userId provided, new user added with default values
+    setUser(userId: ID, values: UserSetters): UserUpdateResponse!
+    deleteUser(userId: ID!): UserUpdateResponse!
+
+    # if no ticketId provided, new ticket added with default values
+    setTicket(ticketId: ID, values: TicketSetters): TicketUpdateResponse! 
+    deleteTicket(ticketId: ID!): TicketUpdateResponse!
+    closeTicket(ticketId: ID!): TicketUpdateResponse!
+    openTicket(ticketId: ID!): TicketUpdateResponse!
+    assignTicket(ticketId: ID!, userId: ID!): TicketUpdateResponse!
+    # if no commentId provided, new comment added
+    setComment(ticketId: ID!, commentId: ID, comment: CommentSetters!): TicketUpdateResponse!
+
+    # if no projectId provided, new project added with default values
+    setProject(projectId: ID, values: ProjectSetters): ProjectUpdateResponse!
+    deleteProject(projectId: ID!): ProjectUpdateResponse!
+    addTeamMember(userID: ID!): ProjectUpdateResponse!
+    removeTeamMember(userId: ID!): ProjectUpdateResponse!
+    addManager(userId: ID!): ProjectUpdateResponse!
+    removeManager(userId: ID!): ProjectUpdateResponse!
+    # if no sprintId provided, new sprint added with default values
+    setSprint(projectId: ID!, sprintId: ID, values: SprintValues): SprintUpdateResponse!
+    deleteSprint(sprintId: ID!): SprintUpdateResponse!
   }
 `
 
