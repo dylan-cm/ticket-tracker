@@ -7,28 +7,28 @@ interface CustomDataSourceType {
 }
 
 interface UserAPIProps {
-  getUser: (email: string) => Promise<User | undefined>
+  getUser: (userId: string) => Promise<User | undefined>
   currentUser: () => Promise<User | undefined>
-  getUserTickets: (email: string) => Promise<Ticket[]>
-  getAllUsers: () => Promise<[User]>
-  getUserLog: (userId: string) => Promise<[Event]>
+  getUserTickets: (userId: string, pageSize: number, after: string) => Promise<Ticket[]>
+  getAllUsers: (pageSize: number, after: string) => Promise<[User]>
+  getUserLog: (userId: string, pageSize: number, after: string) => Promise<[Event]>
 }
 
 interface TicketAPIProps {
   getTicket: (ticketId: string) => Promise<Ticket | undefined>
-  getAllTickets: () => Promise<[Ticket]>
-  getTicketLog: (ticketId: string) => Promise<[Event]>
+  getAllTickets: (pageSize: number, after: string) => Promise<[Ticket]>
+  getTicketLog: (ticketId: string, pageSize: number, after: string) => Promise<[Event]>
 }
 
 interface ProjectAPIProps {
   getProject: (projectId: string) => Promise<Project | undefined>
-  getAllProjects: () => Promise<[Project]>
-  getProjectTeam: (projectId: string) => Promise<[User]>
-  getProjectTickets: (projectId: string) => Promise<[Ticket]>
-  getProjectSprints: (projectId: string) => Promise<[Sprint]>
-  getProjectLog: (projectId: string) => Promise<[Event]>
+  getAllProjects: (pageSize: number, after: string) => Promise<[Project]>
+  getProjectTeam: (projectId: string, pageSize: number, after: string) => Promise<[User]>
+  getProjectTickets: (projectId: string, pageSize: number, after: string) => Promise<[Ticket]>
+  getProjectSprints: (projectId: string, pageSize: number, after: string) => Promise<[Sprint]>
+  getProjectLog: (projectId: string, pageSize: number, after: string) => Promise<[Event]>
 
   getSprint: (sprintId: string) => Promise<Sprint | undefined>
-  getAllSprints: () => Promise<[Sprint]>
-  getSprintLog: (sprintId: string) => Promise<[Event]>
+  getAllSprints: (pageSize: number, after: string) => Promise<[Sprint]>
+  getSprintLog: (sprintId: string, pageSize: number, after: string) => Promise<[Event]>
 }

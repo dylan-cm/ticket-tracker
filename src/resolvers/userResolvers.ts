@@ -15,10 +15,10 @@ const UserResolver: IResolvers = {
     },
     getAllUsers: async (
       _, 
-      __, 
+      {pageSize = 20, after} : {pageSize: number, after: string}, 
       { dataSources }: {dataSources: CustomDataSourceType}
     ): Promise<User[]> => {
-      return await dataSources.userAPI.getAllUsers()
+      return await dataSources.userAPI.getAllUsers(pageSize, after)
     },
     currentUser: async (
       _,
@@ -29,21 +29,21 @@ const UserResolver: IResolvers = {
     },
     getUserTickets: async (
       _, 
-      { userId }: {userId: Scalars['ID']}, 
+      { userId, pageSize = 20, after }: {userId: Scalars['ID'], pageSize: number, after: string}, 
       { dataSources }: {dataSources: CustomDataSourceType}
     ): Promise<Ticket[]> => {
       if(!userId) throw new Error('getUserTickets query requires userId')
       
-      return await dataSources.userAPI.getUserTickets(userId)
+      return await dataSources.userAPI.getUserTickets(userId, pageSize, after)
     },
     getUserLog: async (
       _, 
-      { userId }: {userId: Scalars['ID']}, 
+      { userId, pageSize = 20, after }: {userId: Scalars['ID'], pageSize: number, after: string}, 
       { dataSources }: {dataSources: CustomDataSourceType}
     ): Promise<Event[]> => {
       if(!userId) throw new Error('getUserLog query requires userId')
       
-      return await dataSources.userAPI.getUserLog(userId)
+      return await dataSources.userAPI.getUserLog(userId, pageSize, after)
     },
 
   },
