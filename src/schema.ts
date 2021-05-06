@@ -19,6 +19,7 @@ const typeDefs = gql`
     assignedTickets: [Ticket]!
     project: Project
     resolved: Int!
+    log: [Event]!
   }
 
   type Ticket {
@@ -57,6 +58,7 @@ const typeDefs = gql`
     team: [User]!
     tickets: [Ticket]!
     createdAt: Date!
+    log: [Event]!
   }
 
   type Comment {
@@ -83,6 +85,7 @@ const typeDefs = gql`
     endDate: Date!
     project: Project!
     tickets: [Ticket]!
+    log: [Event]!
   }
 
   enum TicketType {
@@ -114,7 +117,7 @@ const typeDefs = gql`
     getUser(userId: ID!): User
     getUserTickets(userId: ID!): [Ticket]!
     getAllUsers: [User]!
-    getTicketLog(ticketId: ID!): [Event]!
+    getUserLog(ticketId: ID!): [Event]!
     # filterUsers
 
     getProject(projectId: ID!): Project
@@ -122,7 +125,7 @@ const typeDefs = gql`
     getProjectTeam(projectId: ID!): [User]!
     getProjectTickets(projectId: ID!): [Ticket]!
     getProjectSprints(projectId: ID!): [Sprint]!
-    getTicketLog(ticketId: ID!): [Event]!
+    getProjectLog(ticketId: ID!): [Event]!
 
     # Commented out ticket filter. Will implement later.
     getTicket(ticketId: ID!): Ticket
@@ -132,7 +135,7 @@ const typeDefs = gql`
 
     getSprint(sprintId: ID!): Sprint
     getAllSprints: [Sprint]!
-    getTicketLog(ticketId: ID!): [Event]!
+    getSprintLog(ticketId: ID!): [Event]!
     # filterSprints
   }
 `
