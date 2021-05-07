@@ -1,5 +1,6 @@
 import { DataSource } from "apollo-datasource"
-import { Comment, Event, Project, Scalars, Ticket, TicketType, User } from "../types/generated"
+import * as type from "../types/generated"
+import { TicketType } from "../types/generated"
 
 class TicketAPI extends DataSource {
   context: any;
@@ -11,32 +12,32 @@ class TicketAPI extends DataSource {
     this.context = context
   }
 
-  getTicket = async (ticketId: Scalars['ID']): Promise<Ticket | undefined> => {
+  getTicket = async ({ticketId}: type.QueryGetTicketArgs): Promise<type.Ticket | undefined> => {
     if (!ticketId) throw new Error('getTicket query requires ticketId')
     // if(ticket does not exist) return undefined
 
     let tag: string = ""
     let title: string = ""
     let description: string = ""
-    let assignedTo: User | undefined
-    let assignedBy: User | undefined
+    let assignedTo: type.User | undefined
+    let assignedBy: type.User | undefined
     let assigned: boolean = false 
-    let createdAt: Scalars['Date'] = ""
-    let updatedAt: Scalars['Date'] = ""
+    let createdAt: type.Scalars['Date'] = ""
+    let updatedAt: type.Scalars['Date'] = ""
     let deleted: boolean = false
     let open: boolean = false
-    let closedAt: Scalars['Date'] = ""
+    let closedAt: type.Scalars['Date'] = ""
     let priority: number = 0
-    let type: TicketType = TicketType.Bug
-    let comments: Comment[] = []
-    let log: Event[] = []
+    let type: type.TicketType = TicketType.Bug
+    let comments: type.Comment[] = []
+    let log: type.Event[] = []
 
-    let author: User | undefined
-    let project: Project | undefined
+    let author: type.User | undefined
+    let project: type.Project | undefined
 
     if (!author || !project) throw new Error('ticket must have an assigned author and project')
 
-    let ticket: Ticket = {
+    let ticket: type.Ticket = {
     id: ticketId,
     tag,
     title,
@@ -60,14 +61,26 @@ class TicketAPI extends DataSource {
     return ticket
   }
 
-  getAllTickets= async (): Promise<Ticket[]> => {
-    return []
+  getAllTickets= async ({after, pageSize = 20}: type.QueryGetAllTicketsArgs): Promise<type.TicketFeed> => {
+    let ticketFeed: type.TicketFeed = {
+      after,
+      pageSize: 0,
+      tickets: []
+    }
+
+    return ticketFeed
   }
 
-  getTicketLog = async (ticketId: Scalars['ID']): Promise<Event[]> => {
+  getTicketLog = async ({ticketId, after, pageSize = 20}: type.QueryGetTicketLogArgs): Promise<type.EventFeed> => {
     if (!ticketId) throw new Error('getTicket query requires ticketId')
    
-    return []
+    let eventFeed: type.EventFeed = {
+      after,
+      pageSize: 0,
+      events: []
+    }
+
+    return eventFeed
   }
 }
 

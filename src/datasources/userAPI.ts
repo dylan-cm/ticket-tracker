@@ -1,5 +1,5 @@
 import { DataSource } from "apollo-datasource"
-import { Comment, Event, Project, Role, Scalars, Sprint, Ticket, TicketType, User } from "../types/generated"
+import * as type from "../types/generated"
 
 class UserAPI extends DataSource {
   context: any;
@@ -11,23 +11,23 @@ class UserAPI extends DataSource {
     this.context = context
   }
 
-  getUser = async (userId: Scalars['ID']): Promise<User | undefined> => {
+  getUser = async ({userId}: type.QueryGetUserArgs): Promise<type.User | undefined> => {
     if (!userId) throw new Error('getUser query requires userId')
     // if(user does not exist) return undefined
 
     let name = ""
     let email = ""
-    let role: Role | null = null
-    let lastLogin: Scalars['Date'] = ""
-    let joined: Scalars['Date'] = ""
-    let tickets: Ticket[] = []
-    let createdTickets: Ticket[] = []
-    let assignedTickets: Ticket[] = []
-    let project: Project | null = null
+    let role: type.Role | null = null
+    let lastLogin: type.Scalars['Date'] = ""
+    let joined: type.Scalars['Date'] = ""
+    let tickets: type.Ticket[] = []
+    let createdTickets: type.Ticket[] = []
+    let assignedTickets: type.Ticket[] = []
+    let project: type.Project | null = null
     let resolved = 0
-    let log: Event[] = []
+    let log: type.Event[] = []
 
-    let user: User = {
+    let user: type.User = {
       id: userId,
       name,
       email,
@@ -45,25 +45,44 @@ class UserAPI extends DataSource {
     return user
   }
 
-  currentUser = async (): Promise<User | undefined> => {
+  currentUser = async (): Promise<type.User | undefined> => {
     if(!this.context && !this.context.user) return undefined
     else return this.context.user
   } 
 
-  getUserTickets = async (userId: Scalars['ID']): Promise<Ticket[]> => {
+  getUserTickets = async ({userId, after, pageSize = 20}: type.QueryGetUserTicketsArgs): Promise<type.TicketFeed> => {
     if (!userId) throw new Error('getUser query requires userId')
     
-    return []
+    let ticketFeed: type.TicketFeed = {
+      after,
+      pageSize: 0,
+      tickets: []
+    }
+
+    return ticketFeed
   }
 
-  getAllUsers = async (): Promise<User[]> => {
-    return []
+  getAllUsers = async ({after, pageSize = 20}: type.QueryGetAllUsersArgs): Promise<type.UserFeed> => {
+    
+    let userFeed: type.UserFeed = {
+      after,
+      pageSize: 0,
+      users: []
+    }
+
+    return userFeed
   }
   
-  getUserLog = async (userId: Scalars['ID']): Promise<Event[]> => {
+  getUserLog = async ({userId, after, pageSize = 20}: type.QueryGetUserLogArgs): Promise<type.EventFeed> => {
     if (!userId) throw new Error('getUser query requires userId')
     
-    return []
+    let eventFeed: type.EventFeed = {
+      after,
+      pageSize: 0,
+      events: []
+    }
+
+    return eventFeed
   }
 
 }
