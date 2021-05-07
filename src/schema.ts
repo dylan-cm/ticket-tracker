@@ -220,7 +220,7 @@ const typeDefs = gql`
     getUser(userId: ID!): User
     getUserTickets(userId: ID!, after: Base64, pageSize: Int): TicketFeed!
     getAllUsers(after: Base64, pageSize: Int): UserFeed!
-    getUserLog(ticketId: ID!, after: Base64, pageSize: Int): EventFeed!
+    getUserLog(userId: ID!, after: Base64, pageSize: Int): EventFeed!
     # filterUsers
 
     getProject(projectId: ID!): Project
@@ -228,7 +228,7 @@ const typeDefs = gql`
     getProjectTeam(projectId: ID!, after: Base64, pageSize: Int): UserFeed!
     getProjectTickets(projectId: ID!, after: Base64, pageSize: Int): TicketFeed!
     getProjectSprints(projectId: ID!, after: Base64, pageSize: Int): SprintFeed!
-    getProjectLog(ticketId: ID!, after: Base64, pageSize: Int): EventFeed!
+    getProjectLog(projectId: ID!, after: Base64, pageSize: Int): EventFeed!
 
     # Commented out ticket filter. Will implement later.
     getTicket(ticketId: ID!): Ticket
@@ -238,7 +238,7 @@ const typeDefs = gql`
 
     getSprint(sprintId: ID!): Sprint
     getAllSprints(after: Base64, pageSize: Int): SprintFeed!
-    getSprintLog(ticketId: ID!, after: Base64, pageSize: Int): EventFeed!
+    getSprintLog(sprintId: ID!, after: Base64, pageSize: Int): EventFeed!
     # filterSprints
   }
 
@@ -259,10 +259,10 @@ const typeDefs = gql`
     # if no projectId provided, new project added with default values
     setProject(projectId: ID, input: ProjectInput): ProjectUpdateResponse!
     deleteProject(projectId: ID!): ProjectUpdateResponse!
-    addTeamMember(userID: ID!): ProjectUpdateResponse!
-    removeTeamMember(userId: ID!): ProjectUpdateResponse!
-    addManager(userId: ID!): ProjectUpdateResponse!
-    removeManager(userId: ID!): ProjectUpdateResponse!
+    addTeamMember(projectId: ID!, userId: ID!): ProjectUpdateResponse!
+    removeTeamMember(projectId: ID!, userId: ID!): ProjectUpdateResponse!
+    addManager(projectId: ID!, userId: ID!): ProjectUpdateResponse!
+    removeManager(projectId: ID!, userId: ID!): ProjectUpdateResponse!
     # if no sprintId provided, new sprint added with default values
     setSprint(projectId: ID!, sprintId: ID, input: SprintInput): SprintUpdateResponse!
     deleteSprint(sprintId: ID!): SprintUpdateResponse!

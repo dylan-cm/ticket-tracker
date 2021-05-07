@@ -138,21 +138,25 @@ export type MutationDeleteProjectArgs = {
 
 
 export type MutationAddTeamMemberArgs = {
-  userID: Scalars['ID'];
+  projectId: Scalars['ID'];
+  userId: Scalars['ID'];
 };
 
 
 export type MutationRemoveTeamMemberArgs = {
+  projectId: Scalars['ID'];
   userId: Scalars['ID'];
 };
 
 
 export type MutationAddManagerArgs = {
+  projectId: Scalars['ID'];
   userId: Scalars['ID'];
 };
 
 
 export type MutationRemoveManagerArgs = {
+  projectId: Scalars['ID'];
   userId: Scalars['ID'];
 };
 
@@ -242,7 +246,7 @@ export type QueryGetAllUsersArgs = {
 
 
 export type QueryGetUserLogArgs = {
-  ticketId: Scalars['ID'];
+  userId: Scalars['ID'];
   after?: Maybe<Scalars['Base64']>;
   pageSize?: Maybe<Scalars['Int']>;
 };
@@ -281,7 +285,7 @@ export type QueryGetProjectSprintsArgs = {
 
 
 export type QueryGetProjectLogArgs = {
-  ticketId: Scalars['ID'];
+  projectId: Scalars['ID'];
   after?: Maybe<Scalars['Base64']>;
   pageSize?: Maybe<Scalars['Int']>;
 };
@@ -317,7 +321,7 @@ export type QueryGetAllSprintsArgs = {
 
 
 export type QueryGetSprintLogArgs = {
-  ticketId: Scalars['ID'];
+  sprintId: Scalars['ID'];
   after?: Maybe<Scalars['Base64']>;
   pageSize?: Maybe<Scalars['Int']>;
 };

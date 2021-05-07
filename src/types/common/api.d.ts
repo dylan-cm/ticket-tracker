@@ -1,4 +1,4 @@
-import { Ticket, User, Project, Event, Sprint } from "../generated"
+import * as type from "../generated"
 
 interface CustomDataSourceType {
   userAPI: UserAPIProps
@@ -7,28 +7,49 @@ interface CustomDataSourceType {
 }
 
 interface UserAPIProps {
-  getUser: (userId: string) => Promise<User | undefined>
-  currentUser: () => Promise<User | undefined>
-  getUserTickets: (userId: string, pageSize: number, after: string) => Promise<Ticket[]>
-  getAllUsers: (pageSize: number, after: string) => Promise<[User]>
-  getUserLog: (userId: string, pageSize: number, after: string) => Promise<[Event]>
+  getUser: ({userId}: type.QueryGetUserArgs) => Promise<type.User | undefined>
+  currentUser: () => Promise<type.User | undefined>
+  getUserTickets: ({userId, pageSize, after}: type.QueryGetUserTicketsArgs) => Promise<type.TicketFeed>
+  getAllUsers: ({pageSize, after}: type.QueryGetAllUsersArgs) => Promise<type.UserFeeTicketFeed>
+  getUserLog: ({userId, pageSize, after}: type.QueryGetUserLogArgs) => Promise<type.EventFeeTicketFeed>
+
+  setUser: ({userId, input}: type.MutationSetUserArgs) => Promise<type.UserUpdateResponse>
+  deleteUser: ({userId}: type.MutationDeleteUserArgs) => Promise<type.UserUpdateResponse>
 }
 
 interface TicketAPIProps {
-  getTicket: (ticketId: string) => Promise<Ticket | undefined>
-  getAllTickets: (pageSize: number, after: string) => Promise<[Ticket]>
-  getTicketLog: (ticketId: string, pageSize: number, after: string) => Promise<[Event]>
+  getTicket: ({ticketId}: type.QueryGetTicketArgs) => Promise<type.Ticket | undefined>
+  getAllTickets: ({pageSize, after}: type.QueryGetAllTicketsArgs) => Promise<type.TicketFeed>
+  getTicketLog: ({ticketId, pageSize, after}: type.QueryGetTicketLogArgs) => Promise<type.EventFeeTicketFeed>
+
+  setTicket: ({ticketId, input}: type.MutationSetTicketArgs) => Promise<type.TicketUpdateResponse>
+  deleteTicket: ({ticketId}: type.MutationDeleteTicketArgs) => Promise<type.TicketUpdateResponse>
+  closeTicket: ({ticketId}: type.MutationCloseTicketArgs) => Promise<type.TicketUpdateResponse>
+  openTicket: ({ticketId}: type.MutationOpenTicketArgs) => Promise<type.TicketUpdateResponse>
+  assignTicket: ({ticketId, userId}: type.MutationAssignTicketArgs) => Promise<type.TicketUpdateResponse>
+
+  setComment: ({ticketId, commentId, comment}: type.MutationSetCommentArgs) => Promise<type.CommentUpdateResponse>
 }
 
 interface ProjectAPIProps {
-  getProject: (projectId: string) => Promise<Project | undefined>
-  getAllProjects: (pageSize: number, after: string) => Promise<[Project]>
-  getProjectTeam: (projectId: string, pageSize: number, after: string) => Promise<[User]>
-  getProjectTickets: (projectId: string, pageSize: number, after: string) => Promise<[Ticket]>
-  getProjectSprints: (projectId: string, pageSize: number, after: string) => Promise<[Sprint]>
-  getProjectLog: (projectId: string, pageSize: number, after: string) => Promise<[Event]>
+  getProject: ({projectId}: type.QueryGetProjectArgs) => Promise<type.Project | undefined>
+  getAllProjects: ({pageSize, after}: type.QueryGetAllProjectsArgs) => Promise<type.ProjectFeeTicketFeed>
+  getProjectTeam: ({projectId, pageSize, after}: type.QueryGetProjectTeamArgs) => Promise<type.UserFeeTicketFeed>
+  getProjectTickets: ({projectId, pageSize, after}: type.QueryGetProjectTicketsArgs) => Promise<type.TicketFeed>
+  getProjectSprints: ({projectId, pageSize, after}: type.QueryGetProjectSprintsArgs) => Promise<type.SprintFeeTicketFeed>
+  getProjectLog: ({projectId, pageSize, after}: type.QueryGetProjectLogArgs) => Promise<type.EventFeeTicketFeed>
 
-  getSprint: (sprintId: string) => Promise<Sprint | undefined>
-  getAllSprints: (pageSize: number, after: string) => Promise<[Sprint]>
-  getSprintLog: (sprintId: string, pageSize: number, after: string) => Promise<[Event]>
+  setProject: ({projectId, input}: type.MutationSetProjectArgs) => Promise<type.ProjectUpdateResponse>
+  deleteProject: ({projectId}: type.MutationDeleteProjectArgs) => Promise<type.ProjectUpdateResponse>
+  addTeamMember: ({projectId, userId}: type.MutationAddTeamMemberArgs) => Promise<type.ProjectUpdateResponse>
+  removeTeamMember: ({projectId, userId}: type.MutationRemoveTeamMemberArgs) => Promise<type.ProjectUpdateResponse>
+  addManager: ({projectId, userId}: type.MutationAddManagerArgs) => Promise<type.ProjectUpdateResponse>
+  removeManager: ({projectId, userId}: type.MutationRemoveManagerArgs) => Promise<type.ProjectUpdateResponse>
+
+  getSprint: ({sprintId}: type.QueryGetSprintArgs) => Promise<type.Sprint | undefined>
+  getAllSprints: ({pageSize, after}: type.QueryGetAllSprintsArgs) => Promise<type.SprintFeeTicketFeed>
+  getSprintLog: ({sprintId, pageSize, after}: type.QueryGetSprintLogArgs) => Promise<type.EventFeeTicketFeed>
+
+  setSprint: ({projectId, sprintId, input}: type.MutationSetSprintArgs) => Promise<type.SprintUpdateResponse>
+  deleteSprint: ({sprintId}: type.MutationDeleteSprintArgs) => Promise<type.SprintUpdateResponse>
 }
