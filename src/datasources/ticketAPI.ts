@@ -82,6 +82,64 @@ class TicketAPI extends DataSource {
 
     return eventFeed
   }
+
+  setTicket = async ({ticketId, input}: type.MutationSetTicketArgs): Promise<type.TicketUpdateResponse> => {
+    let response: type.TicketUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  deleteTicket = async ({ticketId}: type.MutationDeleteTicketArgs): Promise<type.TicketUpdateResponse> => {
+    if (!ticketId) throw new Error('deleteTicket query requires ticketId')
+    
+    let response: type.TicketUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  closeTicket = async ({ticketId}: type.MutationCloseTicketArgs): Promise<type.TicketUpdateResponse> => {
+    if (!ticketId) throw new Error('closeTicket query requires ticketId')
+    
+    let response: type.TicketUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  openTicket = async ({ticketId}: type.MutationOpenTicketArgs): Promise<type.TicketUpdateResponse> => {
+    if (!ticketId) throw new Error('openTicket query requires ticketId')
+    
+    let response: type.TicketUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  assignTicket = async ({ticketId, userId}: type.MutationAssignTicketArgs): Promise<type.TicketUpdateResponse> => {
+    if (!ticketId || !userId) throw new Error('assignTicket query requires ticketId and userId')
+    
+    let response: type.TicketUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  setComment = async ({ticketId, commentId, comment}: type.MutationSetCommentArgs): Promise<type.CommentUpdateResponse> => {
+    if (!ticketId || !comment) throw new Error('assignTicket query requires ticketId and comment')
+    
+    let response: type.CommentUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
 }
 
 export default TicketAPI

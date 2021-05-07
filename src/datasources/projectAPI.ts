@@ -1,7 +1,7 @@
 import { DataSource } from "apollo-datasource"
 import * as type from "../types/generated"
 
-class UserAPI extends DataSource {
+class ProjectAPI extends DataSource {
   context: any;
   constructor() {
     super();
@@ -48,7 +48,7 @@ class UserAPI extends DataSource {
   }
   
   getProjectTeam = async ({projectId, after, pageSize = 20}: type.QueryGetProjectTeamArgs): Promise<type.UserFeed> => {
-    if (!projectId) throw new Error('getProject query requires projectId')
+    if (!projectId) throw new Error('getProjectTeam query requires projectId')
     
     let userFeed: type.UserFeed = {
       after,
@@ -60,7 +60,7 @@ class UserAPI extends DataSource {
   }
   
   getProjectTickets = async ({projectId, after, pageSize = 20}: type.QueryGetProjectTicketsArgs): Promise<type.TicketFeed> => {
-    if (!projectId) throw new Error('getProject query requires projectId')
+    if (!projectId) throw new Error('getProjectTickets query requires projectId')
     
     let ticketFeed: type.TicketFeed = {
       after,
@@ -72,7 +72,7 @@ class UserAPI extends DataSource {
   }
 
   getProjectSprints = async ({projectId, after, pageSize = 20}: type.QueryGetProjectSprintsArgs): Promise<type.SprintFeed> => {
-    if (!projectId) throw new Error('getProject query requires projectId')
+    if (!projectId) throw new Error('getProjectSprints query requires projectId')
     
     let sprintFeed: type.SprintFeed = {
       after,
@@ -84,7 +84,7 @@ class UserAPI extends DataSource {
   }
 
   getProjectLog = async ({projectId, after, pageSize = 20}: type.QueryGetProjectLogArgs): Promise<type.EventFeed> => {
-    if (!projectId) throw new Error('getProject query requires projectId')
+    if (!projectId) throw new Error('getProjectLog query requires projectId')
     
     let eventFeed: type.EventFeed = {
       after,
@@ -135,7 +135,7 @@ class UserAPI extends DataSource {
   }
 
   getSprintLog = async ({sprintId, after, pageSize = 20}: type.QueryGetSprintLogArgs): Promise<type.EventFeed> => {
-    if (!sprintId) throw new Error('getSprint query requires sprintId')
+    if (!sprintId) throw new Error('getSprintLog query requires sprintId')
 
     let eventFeed: type.EventFeed = {
       after,
@@ -145,6 +145,86 @@ class UserAPI extends DataSource {
 
     return eventFeed
   }
+
+  setProject = async ({projectId, input}: type.MutationSetProjectArgs): Promise<type.ProjectUpdateResponse> => {
+    let response: type.ProjectUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+
+  deleteProject = async ({projectId}: type.MutationDeleteProjectArgs): Promise<type.ProjectUpdateResponse> => {
+    if (!projectId) throw new Error('deleteProject query requires projectId')
+    
+    let response: type.ProjectUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  addTeamMember = async ({projectId}: type.MutationAddTeamMemberArgs): Promise<type.ProjectUpdateResponse> => {
+    if (!projectId) throw new Error('addTeamMember query requires projectId')
+    
+    let response: type.ProjectUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  removeTeamMember = async ({projectId}: type.MutationRemoveTeamMemberArgs): Promise<type.ProjectUpdateResponse> => {
+    if (!projectId) throw new Error('removeTeamMember query requires projectId')
+    
+    let response: type.ProjectUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  addManager = async ({projectId}: type.MutationAddManagerArgs): Promise<type.ProjectUpdateResponse> => {
+    if (!projectId) throw new Error('addManager query requires projectId')
+    
+    let response: type.ProjectUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  removeManager = async ({projectId}: type.MutationRemoveManagerArgs): Promise<type.ProjectUpdateResponse> => {
+    if (!projectId) throw new Error('removeManager query requires projectId')
+    
+    let response: type.ProjectUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  setSprint = async ({projectId, sprintId, input}: type.MutationSetSprintArgs): Promise<type.SprintUpdateResponse> => {
+    if (!projectId) throw new Error('setSprint query requires projectId')
+    
+    let response: type.SprintUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+
+  deleteSprint = async ({sprintId}: type.MutationDeleteSprintArgs): Promise<type.SprintUpdateResponse> => {
+    if (!sprintId) throw new Error('deleteSprint query requires sprintId')
+    
+    let response: type.SprintUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
 }
 
-export default UserAPI
+export default ProjectAPI

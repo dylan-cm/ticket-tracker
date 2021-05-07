@@ -51,7 +51,7 @@ class UserAPI extends DataSource {
   } 
 
   getUserTickets = async ({userId, after, pageSize = 20}: type.QueryGetUserTicketsArgs): Promise<type.TicketFeed> => {
-    if (!userId) throw new Error('getUser query requires userId')
+    if (!userId) throw new Error('getUserTickets query requires userId')
     
     let ticketFeed: type.TicketFeed = {
       after,
@@ -74,7 +74,7 @@ class UserAPI extends DataSource {
   }
   
   getUserLog = async ({userId, after, pageSize = 20}: type.QueryGetUserLogArgs): Promise<type.EventFeed> => {
-    if (!userId) throw new Error('getUser query requires userId')
+    if (!userId) throw new Error('getUserLog query requires userId')
     
     let eventFeed: type.EventFeed = {
       after,
@@ -83,6 +83,24 @@ class UserAPI extends DataSource {
     }
 
     return eventFeed
+  }
+
+  setUser = async ({userId, input}: type.MutationSetUserArgs): Promise<type.UserUpdateResponse> => {
+    let response: type.UserUpdateResponse = {
+      success: false
+    }
+
+    return response
+  }
+
+  deleteUser = async ({userId}: type.MutationDeleteUserArgs): Promise<type.UserUpdateResponse> => {
+    if (!userId) throw new Error('deleteUser query requires userId')
+    
+    let response: type.UserUpdateResponse = {
+      success: false
+    }
+
+    return response
   }
 
 }
